@@ -1,4 +1,4 @@
-package ch.band.yvesimmer.uk335;
+package ch.band.inf2019.uk335;
 
 import android.content.Context;
 
