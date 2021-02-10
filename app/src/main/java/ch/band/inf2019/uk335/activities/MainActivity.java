@@ -1,38 +1,38 @@
 package ch.band.inf2019.uk335.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.widget.ScrollView;
 
-import ch.band.inf2019.uk335.db.DatabaseHandler;
+import java.util.List;
+
 import ch.band.inf2019.uk335.R;
-import ch.band.inf2019.uk335.db.Subscription;
+import ch.band.inf2019.uk335.model.Subscription;
+import ch.band.inf2019.uk335.view.SubscriptionAdapter;
+import ch.band.inf2019.uk335.viewModel.SubscriptionViewModel;
 
 public class MainActivity extends AppCompatActivity {
-    DatabaseHandler db;
-    ScrollView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Subscription[] subs = db.fetch();
-        for(Subscription sub: subs){
-            createButton(sub);
-        }
+        setContentView(R.layout.activity_edit);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.hasFixedSize();
 
-        /*
+        SubscriptionAdapter adapter = new SubscriptionAdapter();
+        recyclerView.setAdapter(adapter);
 
-         */
-    }
-
-    void OnClick(){
-    }
-    
-    private void createButton(Subscription sub){
-        /*
-        create button
-        set button text to         
-         */
+        SubscriptionViewModel subscriptionViewModel = ViewModelProviders.of(this).get(SubscriptionViewModel.class);
+        subscriptionViewModel.getAllSubscriptions().observe(this, new Observer<List<Subscription>>() {
+            @Override
+            public void onChanged(List<Subscription> subscriptions) {
+                adapter.setSubscriptions(subscriptions);
+            }
+        });
     }
 }
