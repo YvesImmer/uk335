@@ -7,4 +7,5 @@
     <string name="text_view_name" />
     <string name="duedate">Zahltag</string>
     <string name="duedate_preview">1.1.1970</string>
+    <string name="button_save">Speichern</string>
 </resources>

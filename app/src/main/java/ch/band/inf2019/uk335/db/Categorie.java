@@ -4,8 +4,6 @@ import androidx.room.Entity;
 
 import androidx.room.PrimaryKey;
 
-
-
 @Entity(tableName = "categorie_table")
 public class Categorie {
     @PrimaryKey(autoGenerate = true) public long id;
