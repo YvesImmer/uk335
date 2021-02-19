@@ -91,7 +91,7 @@ public class SubscriptionRepository {
     public LiveData<List<Subscription>> getAllSubscriptions() {
         return allSubscriptions;
     }
-    //TODO Implement Find Subscrition by Categorie with Callbacks in ViewModel
+
     /*public LiveData<List<Subscription>> getSubscriptionsfromCategorieID(long categorieid){
         final LiveData<List<Subscription>> results;
         executor.execute(new Runnable() {

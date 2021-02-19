@@ -1,4 +1,4 @@
-.package ch.band.inf2019.uk335.activities;
+package ch.band.inf2019.uk335.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
