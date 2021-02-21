@@ -8,4 +8,7 @@
     <string name="duedate">Zahltag</string>
     <string name="duedate_preview">1.1.1970</string>
     <string name="button_save">Speichern</string>
+    <string name="button_goto_subscriptions">kategorien</string>
+    <string name="button_new">Hinzufügen</string>
+    <string name="button_new_category">Neu</string>
 </resources>

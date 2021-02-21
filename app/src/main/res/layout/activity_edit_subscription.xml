@@ -53,11 +53,12 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/cardview_dark_background"
-        android:orientation="vertical"
 
+        android:orientation="vertical"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <RelativeLayout
@@ -75,12 +76,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_name"
-                android:layout_width="120dp"
+                android:layout_width="@dimen/detail_fillable_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/white" />
+                android:background="@android:drawable/btn_default" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -97,12 +98,12 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
             <Spinner
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/detail_fillable_width"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dropdown"
-                android:background="@android:drawable/btn_dropdown"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -120,12 +121,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_price"
-                android:layout_width="120dp"
+                android:layout_width="@dimen/detail_fillable_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@color/white" />
+                android:background="@android:drawable/btn_default" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -142,11 +143,36 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
             <TextView
+                android:layout_width="@dimen/detail_fillable_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:gravity="end"
+                android:text="@string/duedate_preview"
+                android:textAlignment="viewEnd"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@color/cardview_dark_background">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/duedate_preview"
+                android:layout_centerVertical="true"
+                android:text="Erinnerung"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
+            <Spinner
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+                android:layout_alignParentRight="true"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
         </RelativeLayout>
 
     </LinearLayout>

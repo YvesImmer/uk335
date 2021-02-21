@@ -2,4 +2,6 @@
 <resources>
     <item name="text_view_per_year" type="id" />
     <item name="text_view_yearly" type="id" />
+    <item name="relative_layout_card_parent" type="id" />
+    <item name="relative_layout_card_category_parent" type="id" />
 </resources>

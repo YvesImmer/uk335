@@ -41,16 +41,14 @@
                 />
 
             <Button
-                android:id="@+id/btn_goto_subscriptions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/button_goto_subscriptions" />
+                android:text="@string/button_goto_category" />
             <Button
-                android:id="@+id/btn_new_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:text="@string/button_new_category"
+                android:text="@string/button_new_subscription"
                 />
 
 
@@ -72,35 +70,35 @@
         app:layout_anchor="@+id/recycler_view"
         app:layout_anchorGravity="bottom|center"
         android:background="@color/black">
-        <RelativeLayout
-            android:id="@+id/relative_layout_price_duedate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_margin="8dp">
-            <TextView
-                android:id="@+id/text_view_per_year"
+            <RelativeLayout
+                android:id="@+id/relative_layout_price_duedate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pro Jahr:"
-                android:layout_above="@id/text_view_yearly"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:maxLines="1"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"
-                />
-            <TextView
-                android:id="@+id/text_view_yearly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:text="200.00 CHF"
-                android:maxLines="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+                android:layout_gravity="end"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="8dp">
+                <TextView
+                    android:id="@+id/text_view_per_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pro Jahr:"
+                    android:layout_above="@id/text_view_yearly"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:maxLines="1"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                    />
+                <TextView
+                    android:id="@+id/text_view_yearly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="200.00 CHF"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
 

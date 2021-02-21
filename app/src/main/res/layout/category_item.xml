@@ -12,10 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/cardview_dark_background"
-        android:id="@id/relative_layout_card_parent"
->
+        android:id="@id/relative_layout_card_category_parent"
+        >
         <RelativeLayout
-            android:id="@+id/relative_layout_price_duedate"
+            android:id="@+id/relative_layout_category_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -23,21 +23,14 @@
             android:clickable="true"
             android:focusable="true">
             <TextView
-                android:id="@+id/text_view_price"
+                android:id="@+id/text_view_category_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1 CHF"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:maxLines="1"
                 />
-            <TextView
-                android:id="@+id/text_view_duedate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_view_price"
-                android:layout_alignRight="@id/text_view_price"
-                android:text="01.2.4"
-                android:maxLines="1" />
+
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/relative_layout_abo_category"
@@ -45,22 +38,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/relative_layout_price_duedate">
+            android:layout_toLeftOf="@id/relative_layout_category_price">
             <TextView
-                android:id="@+id/text_view_abo"
+                android:id="@+id/text_view_category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Foo Bar"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:maxLines="1"
                 android:ellipsize="end"/>
-            <TextView
-                android:id="@+id/text_view_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:layout_below="@id/text_view_abo"
-                android:text="Woloo"/>
+
         </RelativeLayout>
     </RelativeLayout>
 
