@@ -16,7 +16,7 @@ import static androidx.room.ForeignKey.CASCADE;
         )})
 public class Subscription {
     @PrimaryKey(autoGenerate = true)
-    public long subsciriptionid;
+    public int subsciriptionid;
 
     public String title;
 
