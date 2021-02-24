@@ -17,7 +17,7 @@ import java.util.List;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Subscription;
-import ch.band.inf2019.uk335.viewmodel.MainActivityViewModel;
+import ch.band.inf2019.uk335.viewmodel.MainViewModel;
 import ch.band.inf2019.uk335.viewmodel.SubscriptionAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,37 +26,31 @@ public class MainActivity extends AppCompatActivity {
 
     //vars
     private ArrayList<Subscription>  subscriptions;
-    private MainActivityViewModel mainActivityViewModel;
+    private MainViewModel mainViewModel;
     private RecyclerView recyclerView;
     SubscriptionAdapter adapter;
-    private Object Subscription;
     private Button btn_goto_categories;
     private Button btn_new_subscription;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started");
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        initData();
-        mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         Observer observer = new Observer<List<Subscription>>() {
             @Override
             public void onChanged(List<Subscription> subscriptions) {
-                    adapter.notifyDataSetChanged();
+                // RELEASE
+                adapter.setSubscriptions((ArrayList<ch.band.inf2019.uk335.db.Subscription>) subscriptions);
+                adapter.notifyDataSetChanged();
             }
         };
-        mainActivityViewModel.getSubscriptions().observe( this,observer);
-
-        initButtons();
-    }
-
-    private void initData(){
-        //TODO get Categories and Subscriptions from Repository
-
+        mainViewModel.getSubscriptions().observe( this,observer);
         initRecyclerView();
+        initButtons();
+
     }
 
     //TODO set and update price in bottom
@@ -64,9 +58,11 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView(){
         Log.d(TAG, "initRecylerView: called");
         recyclerView = findViewById(R.id.recycler_view_subscriptions);
-        adapter = new SubscriptionAdapter(this, mainActivityViewModel.getSubscriptions().getValue());
-        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        adapter = new SubscriptionAdapter();
+        recyclerView.setAdapter(adapter);
+
     }
 
     private void initButtons(){

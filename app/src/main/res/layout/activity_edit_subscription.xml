@@ -39,7 +39,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="<" />
+                android:text="@string/subscriptions" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,6 +141,7 @@
                 android:layout_centerVertical="true"
                 android:text="Zahltag:"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+
 
             <TextView
                 android:layout_width="@dimen/detail_fillable_width"

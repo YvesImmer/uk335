@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".activities.EditCategoryActivity"></activity>
+        <activity android:name=".activities.EditCategoryActivity" />
         <activity android:name=".activities.CategoryOverviewActivity" />
         <activity android:name=".activities.EditSubscritpionActivity" />
         <activity android:name=".activities.MainActivity">

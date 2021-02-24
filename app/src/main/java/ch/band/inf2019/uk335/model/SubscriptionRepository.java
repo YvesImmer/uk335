@@ -33,9 +33,10 @@ public class SubscriptionRepository {
         allSubscriptions = subscriptionDao.getAllSubscriptions();
 
     }
-    public static synchronized SubscriptionRepository getInstance(Application app){
+
+    public static synchronized SubscriptionRepository getInstance(Application application){
         if (instance == null){
-            instance = new SubscriptionRepository(app,new NewThreadExecutor());
+            instance = new SubscriptionRepository(application,new NewThreadExecutor());
         }
         return instance;
     }

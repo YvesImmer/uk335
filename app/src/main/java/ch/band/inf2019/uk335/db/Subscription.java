@@ -32,4 +32,5 @@ public class Subscription {
         this.preis = preis;
         this.categorieid = categorieid;
     }
+
 }

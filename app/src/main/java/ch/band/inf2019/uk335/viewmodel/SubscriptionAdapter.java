@@ -20,19 +20,12 @@ import ch.band.inf2019.uk335.activities.EditSubscritpionActivity;
 import ch.band.inf2019.uk335.db.Subscription;
 
 public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapter.ViewHolder>{
-    public static final String EXTRA_SUBSCRIPTION_ID = "ch.band.ind2019.uk335.EXTRA_SUBSCRIPTION__ID";
+    public static final String EXTRA_SUBSCRIPTION_ID = "ch.band.inf2019.uk335.EXTRA_SUBSCRIPTION_ID";
 
     private static final String TAG = "SubscriptionAdapter";
 
-    private Context context;
-    private ArrayList<Subscription> subscriptions = new ArrayList<>();
+    private ArrayList<Subscription> subscriptions = new ArrayList<Subscription>();
     private View.OnClickListener editOnclickListener;
-
-    public SubscriptionAdapter(Context context, List<Subscription> subscriptions) {
-        this.context = context;
-        this.subscriptions = (ArrayList<Subscription>) subscriptions;
-
-    }
 
     @NonNull
     @Override
@@ -49,13 +42,19 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
 
         Subscription current_item = subscriptions.get(position);
 
-        //TODO implement method to get category name from subscription
+        //TODO implement method to get category name for a Subscription
         //holder.text_view_category.setText(current_item.getCategory());
+        //RELEASE
+//        holder.text_view_abo.setText(current_item.title);
+//        holder.text_view_price.setText(current_item.preis);
+//        holder.text_view_duedate.setText(String.valueOf(current_item.dayofnextPayment));
 
-        holder.text_view_abo.setText(current_item.title);
-        holder.text_view_price.setText(current_item.preis);
-        //TODO implement method to get next payment as a date not a long
-        //holder.text_view_duedate.setText(current_item.getDuedate());
+        //DEBUG
+        holder.text_view_abo.setText("Title");
+        holder.text_view_duedate.setText("Duedate");
+        holder.text_view_category.setText("Category");
+        holder.text_view_price.setText("Price");
+
 
         editOnclickListener = new View.OnClickListener() {
             @Override
@@ -69,13 +68,19 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
     private void openEditActivity(View v, int subsciriptionid) {
         Intent intent = new Intent(v.getContext(), EditSubscritpionActivity.class);
         intent.putExtra(EXTRA_SUBSCRIPTION_ID, subsciriptionid);
-        context.startActivity(intent);
+        v.getContext().startActivity(intent);
     }
 
 
     @Override
     public int getItemCount() {
         return subscriptions.size();
+    }
+
+    public void setSubscriptions(ArrayList<Subscription> subscriptions){
+        this.subscriptions = subscriptions;
+        notifyDataSetChanged();
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

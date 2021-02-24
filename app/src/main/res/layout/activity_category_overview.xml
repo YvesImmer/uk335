@@ -59,7 +59,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recycler_view_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
@@ -69,7 +69,7 @@
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        app:layout_anchor="@+id/recycler_view"
+        app:layout_anchor="@+id/recycler_view_categories"
         app:layout_anchorGravity="bottom|center"
         android:background="@color/black">
         <RelativeLayout
