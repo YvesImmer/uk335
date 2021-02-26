@@ -4,8 +4,6 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import static androidx.room.ForeignKey.CASCADE;
-
 @Entity(tableName = "subscription_table",
         foreignKeys = {@ForeignKey(
                 entity = Categorie.class,
@@ -22,21 +20,25 @@ public class Subscription {
 
     public long dayofnextPayment;
 
-    public int preis;
+    public int price;
+
+    public int frequency;
 
     public long categorieid;
 
-    public Subscription(String title, long dayofnextPayment, int preis, long categorieid) {
+    public Subscription(String title, long dayofnextPayment, int price, long categorieid,int frequency) {
         this.title = title;
         this.dayofnextPayment = dayofnextPayment;
-        this.preis = preis;
+        this.price = price;
         this.categorieid = categorieid;
+        this.frequency = frequency;
     }
 
     public Subscription(int Id) {
         title = "";
         dayofnextPayment = 0;
-        preis = 0;
+        price = 0;
         categorieid = Id;
+        frequency = 0;
     }
 }
