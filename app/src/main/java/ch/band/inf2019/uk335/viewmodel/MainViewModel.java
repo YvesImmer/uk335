@@ -13,11 +13,13 @@ import java.util.Objects;
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
 import ch.band.inf2019.uk335.model.SubscriptionRepository;
+import ch.band.inf2019.uk335.notifs.SubscriptionNotificationManager;
 
 public class MainViewModel extends AndroidViewModel {
 
     private LiveData<List<Subscription>> subscriptions;
     private LiveData<List<Categorie>> categories;
+    private SubscriptionNotificationManager notificationManager;
     SubscriptionRepository repository;
 
     public MainViewModel(@NonNull Application application) {
@@ -25,6 +27,8 @@ public class MainViewModel extends AndroidViewModel {
         repository = SubscriptionRepository.getInstance(application);
         subscriptions = repository.getAllSubscriptions();
         categories = repository.getAllCategories();
+        notificationManager = new SubscriptionNotificationManager(application);
+        subscriptions.observeForever(notificationManager);
     }
 
     public LiveData<List<Subscription>> getSubscriptions(){
