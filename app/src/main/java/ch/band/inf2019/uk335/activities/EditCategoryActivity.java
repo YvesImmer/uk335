@@ -61,6 +61,7 @@ public class EditCategoryActivity extends AppCompatActivity {
         }else {
             categorie = new Categorie("Test");
             viewModel.insert(categorie);
+            viewModel.getCategories().notify();
 
             categorie = viewModel.getLastCategory();
         }

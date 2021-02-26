@@ -46,22 +46,15 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         //holder.text_view_category.setText(current_item.getCategory());
         //RELEASE
 //        holder.text_view_abo.setText(current_item.title);
-//        holder.text_view_price.setText(current_item.preis);
+//        holder.text_view_price.setText(current_item.price);
 //        holder.text_view_duedate.setText(String.valueOf(current_item.dayofnextPayment));
-
-        //DEBUG
-        holder.text_view_abo.setText("Title");
-        holder.text_view_duedate.setText("Duedate");
-        holder.text_view_category.setText("Category");
-        holder.text_view_price.setText("Price");
-
-
         editOnclickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openEditActivity(v, current_item.subsciriptionid);
             }
         };
+        holder.parent_layout.setOnClickListener(editOnclickListener);
 
     }
 

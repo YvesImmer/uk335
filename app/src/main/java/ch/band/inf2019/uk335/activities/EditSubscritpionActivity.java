@@ -16,13 +16,16 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Categorie;
@@ -45,7 +48,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         setContentView(R.layout.activity_edit_subscription);
-        setupInputs();
+
 
         Intent intent = getIntent();
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
@@ -61,6 +64,9 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
             TextView tv_selectedDate = findViewById(R.id.text_view_picked_date);
             tv_selectedDate.setText(currentDateString);
         }
+        viewModel.getSubscriptions().observe( this,s ->{
+            setupInputs();
+        });
 
     }
 
