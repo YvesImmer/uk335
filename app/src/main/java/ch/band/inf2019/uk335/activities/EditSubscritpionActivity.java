@@ -59,11 +59,10 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         Intent intent = getIntent();
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
         if(subscriptionID == -1){
-            viewModel.insert(new Subscription());
+            viewModel.insert(new Subscription(viewModel.getFirstCategoryID()));
             viewModel.getSubscriptionById(subscriptionID);
         }
         else{
-            //Create new Subscritpion
             Calendar c = Calendar.getInstance();
             String currentDateString = DateFormat.getDateInstance().format(c.getTime());
             TextView tv_selectedDate = findViewById(R.id.text_view_picked_date);

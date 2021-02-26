@@ -65,7 +65,11 @@ public class MainViewModel extends AndroidViewModel {
 
         }
         //TODO implement exception
-        return new Subscription();
+        return null;
+    }
+
+    public int getFirstCategoryID(){
+        return categories.getValue().get(0).id;
     }
 
     public Categorie getCategorieById(int ID){

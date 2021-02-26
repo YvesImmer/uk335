@@ -31,6 +31,7 @@ public class EditCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_category);
         text_input_name = findViewById(R.id.text_input_category_name);
         btn_save = findViewById(R.id.btn_save_category);
+        btn_delete = findViewById(R.id.btn_delete_categorie);
 
         Intent intent = getIntent();
         int categoryID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
@@ -47,15 +48,20 @@ public class EditCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewModel.update(categorie);
+                gotoCategories();
             }
         });
+
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewModel.delete(categorie);
+                gotoCategories();
             }
         });
-
-
+    }
+    private void gotoCategories(){
+        Intent intent = new Intent(this, CategoryOverviewActivity.class);
+        startActivity(intent);
     }
 }

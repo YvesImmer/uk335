@@ -26,7 +26,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private static final String EXTRA_CATEGORIE_ID = "ch.band.inf2019.uk335.EXTRA_CATEGORIE_ID";
 
     private ArrayList<Categorie> categories = new ArrayList<Categorie>();
-    private View.OnClickListener editOnclickListener;
+
 
     public void setCategories(ArrayList<Categorie> categories){
         this.categories = categories;
@@ -44,6 +44,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
         Categorie current_item = categories.get(position);
+        holder.parent_layout.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openEditActivity(v,current_item.id);
+            }
+        });
+
 
         //TODO implement a method to get the monthly cost of a category
         //holder.text_view_price.setText(current_item.monthlyPrice);

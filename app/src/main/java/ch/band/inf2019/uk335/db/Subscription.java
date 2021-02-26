@@ -33,10 +33,10 @@ public class Subscription {
         this.categorieid = categorieid;
     }
 
-    public Subscription() {
+    public Subscription(int Id) {
         title = "";
         dayofnextPayment = 0;
         preis = 0;
-        categorieid = 0;
+        categorieid = Id;
     }
 }
