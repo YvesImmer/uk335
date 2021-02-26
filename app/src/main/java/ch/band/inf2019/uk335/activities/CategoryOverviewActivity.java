@@ -39,6 +39,7 @@ public class CategoryOverviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_overview);
+        setTitle("Kategorien");
         Log.d(TAG, "onCreate: started");
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 

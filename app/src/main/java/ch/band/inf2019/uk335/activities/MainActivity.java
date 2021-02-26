@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started");
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        setTitle("Abos");
 
         Observer observer = new Observer<List<Subscription>>() {
             @Override

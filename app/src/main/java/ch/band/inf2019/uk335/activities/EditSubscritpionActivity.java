@@ -62,8 +62,10 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
         if(subscriptionID >= 0){
             subscription = viewModel.getSubscriptionById(subscriptionID);
+            setTitle("Kategorie berabeiten");
         }
         else{
+            setTitle("Kategorie erstellen");
             viewModel.insert(new Subscription(viewModel.getFirstCategoryID()));
             subscription = viewModel.getLastSubscription();
             Calendar c = Calendar.getInstance();

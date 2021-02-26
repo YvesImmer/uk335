@@ -3,12 +3,12 @@
     <string name="subscriptions">Abos</string>
     <string name="button_new_subscription">Neu</string>
     <string name="text_view_subscriptions">Abos</string>
-    <string name="button_goto_category">Abos</string>
+    <string name="button_goto_category">Kategorien</string>
     <string name="text_view_name" />
     <string name="duedate">Zahltag</string>
     <string name="duedate_preview">1.1.1970</string>
     <string name="button_save">Speichern</string>
-    <string name="button_goto_subscriptions">kategorien</string>
+    <string name="button_goto_subscriptions">Abos</string>
     <string name="button_new">Hinzufügen</string>
     <string name="button_new_category">Neu</string>
     <string name="delete">Löschen</string>
