@@ -2,9 +2,15 @@ package ch.band.inf2019.uk335.db;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import java.util.concurrent.Executor;
+
+import ch.band.inf2019.uk335.model.NewThreadExecutor;
 
 @Database(entities = {Categorie.class, Subscription.class},version = 1)
 public abstract class SubscriptionDatabase extends RoomDatabase {
@@ -24,4 +30,19 @@ public abstract class SubscriptionDatabase extends RoomDatabase {
         }
         return instance;
     }
+    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            Executor executor = new NewThreadExecutor();
+            executor.execute(() -> {
+                CategorieDao categorieDao = SubscriptionDatabase.instance.categorieDao();
+                categorieDao.insert(
+                        new Categorie("Streaming"),
+                        new Categorie("Mobilität")
+
+                );
+            });
+        }
+    };
 }
