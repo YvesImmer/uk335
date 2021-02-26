@@ -10,8 +10,8 @@ import static androidx.room.ForeignKey.CASCADE;
         foreignKeys = {@ForeignKey(
                 entity = Categorie.class,
                 parentColumns = "id",
-                childColumns = "categorieid",
-                onDelete = CASCADE
+                childColumns = "categorieid"//,
+                //onDelete = CASCADE
 
         )})
 public class Subscription {

@@ -5,16 +5,12 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
-import ch.band.inf2019.uk335.model.NewThreadExecutor;
 import ch.band.inf2019.uk335.model.SubscriptionRepository;
 
 public class MainViewModel extends AndroidViewModel {

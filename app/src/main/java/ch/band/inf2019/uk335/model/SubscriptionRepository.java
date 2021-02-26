@@ -9,6 +9,7 @@ import androidx.room.Room;
 
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.CategorieDao;
@@ -36,7 +37,7 @@ public class SubscriptionRepository {
 
     public static synchronized SubscriptionRepository getInstance(Application application){
         if (instance == null){
-            instance = new SubscriptionRepository(application,new NewThreadExecutor());
+            instance = new SubscriptionRepository(application, Executors.newSingleThreadExecutor());
         }
         return instance;
     }
