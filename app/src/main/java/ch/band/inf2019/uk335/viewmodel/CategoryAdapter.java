@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import ch.band.inf2019.uk335.R;
+import ch.band.inf2019.uk335.activities.EditCategoryActivity;
 import ch.band.inf2019.uk335.activities.EditSubscritpionActivity;
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
@@ -77,7 +78,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     private void openEditActivity(View v, int subsciriptionid) {
-        Intent intent = new Intent(v.getContext(), EditSubscritpionActivity.class);
+        Intent intent = new Intent(v.getContext(), EditCategoryActivity.class);
         intent.putExtra(EXTRA_CATEGORIE_ID, subsciriptionid);
         v.getContext().startActivity(intent);
     }

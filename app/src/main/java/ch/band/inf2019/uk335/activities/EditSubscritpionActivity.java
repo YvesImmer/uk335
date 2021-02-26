@@ -3,6 +3,9 @@ package ch.band.inf2019.uk335.activities;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -42,6 +45,26 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         setContentView(R.layout.activity_edit_subscription);
 
+        nameTextInput = findViewById(R.id.text_input_name);
+        nameTextInput.addTextChangedListener(
+                    new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            subscription.title = s.toString();
+                        }
+                    }
+        );
+
+        priceTextInput = findViewById(R.id.text_input_price);
+        priceTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
         categorySpinner = findViewById(R.id.spinner_category_select);
         ArrayAdapter<Categorie> spinnerAdapter = new ArrayAdapter<Categorie>(this,
                 R.layout.support_simple_spinner_dropdown_item, viewModel.getCategories().getValue());
@@ -60,7 +83,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
         if(subscriptionID == -1){
             viewModel.insert(new Subscription(viewModel.getFirstCategoryID()));
-            viewModel.getSubscriptionById(subscriptionID);
+            subscription = viewModel.getSubscriptionById(subscriptionID);
         }
         else{
             Calendar c = Calendar.getInstance();
