@@ -25,6 +25,7 @@ public abstract class SubscriptionDatabase extends RoomDatabase {
                     SubscriptionDatabase.class,
                     "subscribtion_database")
                     .fallbackToDestructiveMigration()
+                    .addCallback(roomCallback)
                     .build();
         }
         return instance;
@@ -41,6 +42,8 @@ public abstract class SubscriptionDatabase extends RoomDatabase {
                         new Categorie("Mobilität")
 
                 );
+
+
             });
         }
     };

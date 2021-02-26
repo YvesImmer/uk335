@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -30,7 +31,8 @@ public class MainViewModel extends AndroidViewModel {
         notificationManager = new SubscriptionNotificationManager(application);
         subscriptions.observeForever(notificationManager);
     }
-
+    //region Database
+    //region General CRUD
     public LiveData<List<Subscription>> getSubscriptions(){
         return subscriptions;
     }
@@ -60,19 +62,8 @@ public class MainViewModel extends AndroidViewModel {
     public void delete(Categorie categorie){
         repository.delete(categorie);
     }
-
-    public Subscription getSubscriptionById(int ID) {
-
-        for (Subscription s:
-                Objects.requireNonNull(subscriptions.getValue())
-             ) {
-            if (s.subsciriptionid == ID) return s;
-
-        }
-        //TODO implement exception
-        return null;
-    }
-
+    //endregion
+    //region Get Special Categories
     public int getFirstCategoryID(){
         return categories.getValue().get(0).id;
     }
@@ -90,6 +81,29 @@ public class MainViewModel extends AndroidViewModel {
         //TODO implement propper exception
         return new Categorie("Error");
     }
+    //endregion
+    //region Get Special Subscriptions
+    public Subscription getSubscriptionById(int ID) {
 
+        for (Subscription s:
+                Objects.requireNonNull(subscriptions.getValue())
+        ) {
+            if (s.subsciriptionid == ID) return s;
 
+        }
+        //TODO implement exception
+        return null;
+    }
+    //endregion
+    //endregion
+    //region Subscriptions
+    public void updateAllDayOfNextPayment(){
+        if(subscriptions.getValue() != null) {
+            for (Subscription s : subscriptions.getValue()
+            ) {
+                update(s.updateDayOfNextPayment(new Date().getTime()));
+            }
+        }
+    }
+    //endregion
 }

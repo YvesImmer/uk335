@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mainViewModel.getSubscriptions().observe( this,observer);
+        mainViewModel.updateAllDayOfNextPayment();
         initRecyclerView();
         initButtons();
 

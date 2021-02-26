@@ -3,6 +3,10 @@ package ch.band.inf2019.uk335.db;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "subscription_table",
@@ -22,12 +26,16 @@ public class Subscription {
     public long dayofnextPayment;
 
     public int price;
-
+    /**
+     * 0 for never
+     * 1 for mothly
+     * 2 for yearly
+     */
     public int frequency;
 
-    public long categorieid;
+    public int categorieid;
 
-    public Subscription(String title, long dayofnextPayment, int price, long categorieid,int frequency) {
+    public Subscription(String title, long dayofnextPayment, int price, int categorieid,int frequency) {
         this.title = title;
         this.dayofnextPayment = dayofnextPayment;
         this.price = price;
@@ -35,11 +43,25 @@ public class Subscription {
         this.frequency = frequency;
     }
 
-    public Subscription(int Id) {
-        title = "";
-        dayofnextPayment = 0;
-        price = 0;
-        categorieid = Id;
-        frequency = 0;
+    public Subscription(int categorieId) {
+        this("",0,0,categorieId,0);
+
+    }
+    public Subscription updateDayOfNextPayment(long currentDate){
+        if(frequency<0){
+            Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            c.setTimeInMillis(dayofnextPayment);
+            while (dayofnextPayment < currentDate){
+                switch (frequency){
+                    case 1:c.add(Calendar.MONTH, 1);break;
+                    case 2:c.add(Calendar.YEAR,1);break;
+                    default:break;
+                }
+
+                dayofnextPayment = c.getTimeInMillis();
+            }
+        }
+
+        return this;
     }
 }

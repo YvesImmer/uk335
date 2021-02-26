@@ -1,5 +1,6 @@
 package ch.band.inf2019.uk335.db;
 
+
 import androidx.room.Entity;
 
 import androidx.room.PrimaryKey;
@@ -16,6 +17,7 @@ public class Categorie {
 
 
     //overridden so it is displayed in the category select spinner
+
     @Override
     public String toString(){
         return title;
