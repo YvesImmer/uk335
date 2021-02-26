@@ -45,8 +45,8 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         //TODO implement method to get category name for a Subscription
         //holder.text_view_category.setText(current_item.getCategory());
         //RELEASE
-//        holder.text_view_abo.setText(current_item.title);
-//        holder.text_view_price.setText(current_item.price);
+        holder.text_view_abo.setText(current_item.title);
+        holder.text_view_price.setText(String.valueOf(current_item.price));
 //        holder.text_view_duedate.setText(String.valueOf(current_item.dayofnextPayment));
         editOnclickListener = new View.OnClickListener() {
             @Override
