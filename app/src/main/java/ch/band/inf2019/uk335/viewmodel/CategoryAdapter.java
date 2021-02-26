@@ -50,8 +50,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //holder.text_view_name.setText(current_item.title);
 
         //DEBUG
-//        holder.text_view_name.setText("Title");
-//        holder.text_view_price.setText("Monthly Price");
+        holder.text_view_name.setText("Title");
+        holder.text_view_price.setText("Monthly Price");
 
     }
 

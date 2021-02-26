@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     SubscriptionAdapter adapter;
     private Button btn_goto_categories;
-    private Button btn_new_subscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_new_subscription = findViewById(R.id.btn_new_subscription);
+        Button btn_new_subscription = findViewById(R.id.btn_new_subscription);
         btn_new_subscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

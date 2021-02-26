@@ -33,4 +33,10 @@ public class Subscription {
         this.categorieid = categorieid;
     }
 
+    public Subscription() {
+        title = "";
+        dayofnextPayment = 0;
+        preis = 0;
+        categorieid = -1;
+    }
 }

@@ -36,11 +36,18 @@
                 app:layout_collapseMode="pin"
                 />
 
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/subscriptions" />
+                android:text="@string/text_view_new_category"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+
+                />
             <Button
+                android:id="@id/btn_save_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
@@ -54,7 +61,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/cardview_dark_background"
 
@@ -75,7 +82,7 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_input_name"
+                android:id="@+id/text_input_category_name"
                 android:layout_width="@dimen/detail_fillable_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -83,7 +90,12 @@
                 android:layout_centerVertical="true"
                 android:background="@android:drawable/btn_default" />
         </RelativeLayout>
-
+        <Button
+            android:id="@+id/btn_delete_categorie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/delete"/>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

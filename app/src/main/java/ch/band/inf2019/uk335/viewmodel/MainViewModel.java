@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
@@ -58,6 +60,27 @@ public class MainViewModel extends AndroidViewModel {
         repository.delete(categorie);
     }
 
+    public Subscription getSubscriptionById(int ID) {
+
+        for (Subscription s:
+                Objects.requireNonNull(subscriptions.getValue())
+             ) {
+            if (s.subsciriptionid == ID) return s;
+
+        }
+        //TODO implement exception
+        return new Subscription();
+    }
+
+    public Categorie getCategorieById(int ID){
+        for (Categorie c:
+                categories.getValue()
+             ) {
+            if(c.id == ID) return c;
+        }
+        //TODO implement propper exception
+        return new Categorie("Error");
+    }
 
 
 }

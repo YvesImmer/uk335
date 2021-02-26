@@ -4,4 +4,5 @@
     <item name="text_view_yearly" type="id" />
     <item name="relative_layout_card_parent" type="id" />
     <item name="relative_layout_card_category_parent" type="id" />
+    <item name="btn_save_category" type="id" />
 </resources>
