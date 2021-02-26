@@ -35,7 +35,6 @@ public class SubscriptionNotificationManager implements Observer<List<Subscripti
     private Notification createNotification(String title){
         return new NotificationCompat.Builder(context, BaseApplication.NOTIFICATION_CHANNNEL_ID)
                 .setContentTitle(title)
-
                 .setSmallIcon(R.drawable.ic_sheffy)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .build();
