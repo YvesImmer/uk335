@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.model.SubscriptionRepository;
+import ch.band.inf2019.uk335.viewmodel.CategoryAdapter;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
 import ch.band.inf2019.uk335.viewmodel.SubscriptionAdapter;
 
@@ -54,13 +55,13 @@ public class EditCategoryActivity extends AppCompatActivity {
         btn_delete = findViewById(R.id.btn_delete_categorie);
 
         Intent intent = getIntent();
-        int categoryID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID,-1);
-
+        int categoryID = intent.getIntExtra(CategoryAdapter.EXTRA_CATEGORIE_ID ,-1);
         if(categoryID >= 0){
             categorie = viewModel.getCategorieById(categoryID);
         }else {
             categorie = new Categorie("Test");
             viewModel.insert(categorie);
+
             categorie = viewModel.getLastCategory();
         }
         text_input_name.setText(categorie.title);

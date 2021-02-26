@@ -24,7 +24,7 @@ import ch.band.inf2019.uk335.db.Subscription;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>{
 
     private static final String TAG = "SubscriptionAdapter";
-    private static final String EXTRA_CATEGORIE_ID = "ch.band.inf2019.uk335.EXTRA_CATEGORIE_ID";
+    public static final String EXTRA_CATEGORIE_ID = "ch.band.inf2019.uk335.EXTRA_CATEGORIE_ID";
 
     private ArrayList<Categorie> categories = new ArrayList<Categorie>();
 
@@ -77,9 +77,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
-    private void openEditActivity(View v, int subsciriptionid) {
+    private void openEditActivity(View v, int categoryid) {
         Intent intent = new Intent(v.getContext(), EditCategoryActivity.class);
-        intent.putExtra(EXTRA_CATEGORIE_ID, subsciriptionid);
+        intent.putExtra(EXTRA_CATEGORIE_ID, categoryid);
         v.getContext().startActivity(intent);
     }
 }

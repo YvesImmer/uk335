@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Categorie.class, Subscription.class},version = 1)
+@Database(entities = {Categorie.class, Subscription.class},version = 2)
 public abstract class SubscriptionDatabase extends RoomDatabase {
     private static SubscriptionDatabase instance;
 

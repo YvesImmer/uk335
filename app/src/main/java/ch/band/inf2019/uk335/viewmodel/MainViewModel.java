@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -69,8 +70,10 @@ public class MainViewModel extends AndroidViewModel {
     }
 
     public Categorie getLastCategory(){
-        return categories.getValue().get(categories.getValue().size()-1);
+        return  categories.getValue().get(Math.max(categories.getValue().size()-1,0));
     }
+
+
 
     public Categorie getCategorieById(int ID){
         for (Categorie c:
@@ -93,6 +96,9 @@ public class MainViewModel extends AndroidViewModel {
         }
         //TODO implement exception
         return null;
+    }
+    public Subscription getLastSubscription() {
+        return  subscriptions.getValue().get((Math.max(subscriptions.getValue().size()-1,0)));
     }
     //endregion
     //endregion
