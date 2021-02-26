@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import ch.band.inf2019.uk335.db.Categorie;
@@ -74,6 +75,10 @@ public class MainViewModel extends AndroidViewModel {
 
     public int getFirstCategoryID(){
         return categories.getValue().get(0).id;
+    }
+
+    public Categorie getLastCategory(){
+        return categories.getValue().get(categories.getValue().size()-1);
     }
 
     public Categorie getCategorieById(int ID){

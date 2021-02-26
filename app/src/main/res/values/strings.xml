@@ -16,4 +16,5 @@
     <string name="text_view_new_subscription">Neues Abo</string>
     <string name="text_view_new_category">Neue Kategorie</string>
     <string name="notification_channel_desc">Kanal für die Abonnementbenachrichtigungen</string>
+    <string name="label_frequency">Häufigkeit:</string>
 </resources>
