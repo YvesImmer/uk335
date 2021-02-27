@@ -104,21 +104,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             }
 
         }
-        calendar.add(Calendar.YEAR,1);
+        calendar.add(Calendar.MONTH,1);
         long monthInFuture = calendar.getTimeInMillis();
         for (Subscription s:subscriptionscopy
         ) {
-            if(s.dayofnextPayment<monthInFuture)
+            if(s.dayofnextPayment<monthInFuture){
                 Log.d("Cost Calc",s.dayofnextPayment+" - "+monthInFuture+" = "+ (s.dayofnextPayment-monthInFuture) + s.title);
-                if(s.frequency == 2){
-                    cost+=s.price;
-                }else if (s.frequency == 1){
-                    cost += s.price;
-                }else{
-                    cost+= s.price;
+                cost+= s.price;
+            }
 
-                }
+
+
         }
+        Log.d("Cost Calc","Cost= "+cost);
         return cost;
     }
 }
