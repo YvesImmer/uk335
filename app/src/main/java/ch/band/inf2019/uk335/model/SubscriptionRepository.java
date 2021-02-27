@@ -41,7 +41,7 @@ public class SubscriptionRepository {
         }
         return instance;
     }
-
+//region General CRUD
     /**
      * Inserts Subscriptions in to the Database
      * @param subscriptions Subscriptions to be inserted in to the Database
@@ -102,7 +102,14 @@ public class SubscriptionRepository {
     public LiveData<List<Subscription>> getAllSubscriptions() {
         return allSubscriptions;
     }
+//endregion
 
+    public void getCategorieFromSubscriptionID(int subscriptionid,OnDBOperationCompleteListener listener) {
+        Executors.newSingleThreadExecutor()
+                .execute(() -> listener.onDBOperationComplete(subscriptionDao.getCategorieFromSubscription(subscriptionid))
+                );
+
+    }
     /*public LiveData<List<Subscription>> getSubscriptionsfromCategorieID(long categorieid){
         final LiveData<List<Subscription>> results;
         executor.execute(new Runnable() {
@@ -114,4 +121,5 @@ public class SubscriptionRepository {
         });
 
     }*/
+
 }

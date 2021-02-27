@@ -24,6 +24,9 @@ public interface SubscriptionDao {
     @Query("SELECT * FROM subscription_table ORDER BY dayofnextPayment DESC")
     LiveData<List<Subscription>> getAllSubscriptions();
 
+    @Query("SELECT CATEGORIE_TABLE.* FROM subscription_table JOIN CATEGORIE_TABLE WHERE subscription_table.subsciriptionid=:subscriptionid")
+    Categorie getCategorieFromSubscription(final int subscriptionid);
+
     /*@Query("SELECT * FROM subscription_table WHERE categorieid=:categorieid")
     LiveData<List<Subscription>> findSubscriptionsForCategorie(final long categorieid);*/
 }
