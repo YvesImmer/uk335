@@ -16,10 +16,11 @@ import java.util.TimeZone;
 
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
+import ch.band.inf2019.uk335.model.OnDBOperationCompleteListener;
 import ch.band.inf2019.uk335.model.SubscriptionRepository;
 import ch.band.inf2019.uk335.notifs.SubscriptionNotificationManager;
 
-public class MainViewModel extends AndroidViewModel {
+public class MainViewModel extends AndroidViewModel{
 
     private LiveData<List<Subscription>> livesubscriptions;
     private List<Subscription> subscriptions;
@@ -126,6 +127,18 @@ public class MainViewModel extends AndroidViewModel {
         }
         return  lastSubscription;
     }
+
+    public Categorie getCategorieFromSubscriptionID(int subscriptionId){
+        final Categorie[] categorie = new Categorie[1];
+        repository.getCategorieFromSubscriptionID(subscriptionId, new OnDBOperationCompleteListener() {
+            @Override
+            public void onDBOperationComplete(Object object) {
+                categorie[0] = (Categorie)object;
+            }
+        });
+        return categorie[0];
+
+    }
     //endregion
     //endregion
     //region Calculations
@@ -180,6 +193,7 @@ public class MainViewModel extends AndroidViewModel {
         }
         return cost;
     }
+
     //endregion
     //regions Observers
     private class SubscriptionObserver implements Observer<List<Subscription>>{

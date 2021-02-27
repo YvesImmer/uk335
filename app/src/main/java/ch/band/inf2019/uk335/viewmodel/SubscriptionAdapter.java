@@ -2,6 +2,7 @@ package ch.band.inf2019.uk335.viewmodel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.lang.UScript;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
@@ -19,15 +23,18 @@ import java.util.List;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.activities.EditSubscritpionActivity;
+import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
+import ch.band.inf2019.uk335.model.OnDBOperationCompleteListener;
+import ch.band.inf2019.uk335.model.SubscriptionRepository;
 
 public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapter.ViewHolder>{
     public static final String EXTRA_SUBSCRIPTION_ID = "ch.band.inf2019.uk335.EXTRA_SUBSCRIPTION_ID";
-
     private static final String TAG = "SubscriptionAdapter";
 
     private ArrayList<Subscription> subscriptions = new ArrayList<Subscription>();
     private View.OnClickListener editOnclickListener;
+    private ArrayList<Categorie> categories;
 
     @NonNull
     @Override
@@ -51,7 +58,8 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         }else if (current_item.frequency ==2){
             frequency = "Jährlich";
         }
-        holder.text_view_category.setText(frequency);
+        String title = getCategoryTitle(current_item.categorieid);
+        holder.text_view_category.setText(title);
         holder.text_view_abo.setText(current_item.title);
         holder.text_view_price.setText(String.valueOf((double)current_item.price/100));
         holder.text_view_duedate.setText(new SimpleDateFormat("dd-MM-yyyy").format(new Date(current_item.dayofnextPayment)));
@@ -63,6 +71,14 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         };
         holder.parent_layout.setOnClickListener(editOnclickListener);
 
+    }
+
+    private String getCategoryTitle(int categorieid) {
+        for (Categorie c
+        : categories) {
+            if (c.id == categorieid) return c.title;
+        }
+        return "Kategorie nicht gefunden";
     }
 
     private void openEditActivity(View v, int subsciriptionid) {
@@ -81,6 +97,11 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         this.subscriptions = subscriptions;
         notifyDataSetChanged();
 
+    }
+
+    public void setCategories(ArrayList<Categorie> categories){
+        this.categories = categories;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -16,13 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.band.inf2019.uk335.R;
+import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
 import ch.band.inf2019.uk335.viewmodel.SubscriptionAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-
 
     //vars
     private ArrayList<Subscription>  subscriptions;
@@ -47,7 +47,16 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         };
+        
+        Observer cObserver = new Observer<List<Categorie>>() {
+            @Override
+            public void onChanged(List<Categorie> categories) {
+                adapter.setCategories((ArrayList<Categorie>) categories);
+                adapter.notifyDataSetChanged();
+            }
+        };
         mainViewModel.getSubscriptions().observe( this,observer);
+        mainViewModel.getCategories().observe(this, cObserver);
         mainViewModel.updateAllDayOfNextPayment();
         initRecyclerView();
         initButtons();

@@ -102,6 +102,7 @@
                 android:layout_alignParentRight="true"
                 android:background="@android:drawable/btn_dropdown"
                 android:spinnerMode="dropdown" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -142,13 +143,15 @@
                 android:text="@string/label_frequency"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
-            <ToggleButton
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/spinner_frequency_select"
+                android:layout_width="@dimen/detail_fillable_width"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:textOn="Monatlich"
-                android:textOff="Jährlich"
-                                />
+                android:layout_alignParentRight="true"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown" />
+
         </RelativeLayout>
 
         <RelativeLayout

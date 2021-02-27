@@ -79,6 +79,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
             subscription.title = "Neues Abo";
             subscription.frequency = 1;
             subscription.price = 0;
+            subscription.dayofnextPayment = c.getTime().getTime();
         }
         setupInputs();
     }

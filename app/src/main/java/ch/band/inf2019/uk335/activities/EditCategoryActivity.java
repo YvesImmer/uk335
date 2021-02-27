@@ -2,6 +2,7 @@ package ch.band.inf2019.uk335.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -16,6 +17,9 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.model.SubscriptionRepository;
@@ -29,11 +33,19 @@ public class EditCategoryActivity extends AppCompatActivity {
     Button btn_save;
     Button btn_delete;
     Categorie categorie;
+    ArrayList<Categorie> categories;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         setContentView(R.layout.activity_edit_category);
+        viewModel.getCategories().observe(this, new Observer<List<Categorie>>() {
+                    @Override
+                    public void onChanged(List<Categorie> categories) {
+                        categories = viewModel.getCategories().getValue();
+                    }
+                });
         text_input_name = findViewById(R.id.text_input_category_name);
         text_input_name.addTextChangedListener(
                 new TextWatcher() {
@@ -99,7 +111,7 @@ public class EditCategoryActivity extends AppCompatActivity {
                 .setPositiveButton("Löschen", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        //your deleting code
+                        //Deleting our category
                         viewModel.delete(categorie);
                         gotoCategories();
                         dialog.dismiss();
