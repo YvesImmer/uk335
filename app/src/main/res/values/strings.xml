@@ -18,4 +18,5 @@
     <string name="notification_channel_desc">Kanal für die Abonnementbenachrichtigungen</string>
     <string name="label_frequency">Häufigkeit:</string>
     <string name="delete_cancel">Abbrechen</string>
+    <string name="default_category_name">Neue Kategorie</string>
 </resources>
