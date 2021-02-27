@@ -20,4 +20,5 @@
     <string name="delete_cancel">Abbrechen</string>
     <string name="default_category_name">Neue Kategorie</string>
     <string name="default_subscription_name">Neues Abo</string>
+    <string name="text_view_color">Farbe:</string>
 </resources>

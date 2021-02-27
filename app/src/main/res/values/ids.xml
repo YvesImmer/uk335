@@ -5,4 +5,5 @@
     <item name="relative_layout_card_parent" type="id" />
     <item name="relative_layout_card_category_parent" type="id" />
     <item name="btn_save_category" type="id" />
+    <item name="btn_color_picker" type="id" />
 </resources>

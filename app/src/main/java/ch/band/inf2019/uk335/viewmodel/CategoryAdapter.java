@@ -1,7 +1,6 @@
 package ch.band.inf2019.uk335.viewmodel;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         //TODO implement a method to get the monthly cost of a category
         //holder.text_view_price.setText(current_item.monthlyPrice);
         holder.text_view_name.setText(current_item.title);
-        holder.parent_layout.setBackgroundColor(Color.CYAN);
+        holder.parent_layout.setBackgroundColor(current_item.color);
 
     }
 

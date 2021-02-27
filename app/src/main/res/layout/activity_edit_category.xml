@@ -80,6 +80,25 @@
                 android:layout_centerVertical="true"
                 android:background="@android:drawable/btn_default" />
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@color/cardview_dark_background">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/text_view_color"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+            <Button
+                android:id="@id/btn_color_picker"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                />
+        </RelativeLayout>
         <Button
             android:id="@+id/btn_delete_categorie"
             android:layout_width="wrap_content"

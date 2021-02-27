@@ -1,6 +1,7 @@
 package ch.band.inf2019.uk335.db;
 
 import android.content.Context;
+import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -11,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Categorie.class, Subscription.class},version = 2)
+@Database(entities = {Categorie.class, Subscription.class},version = 1)
 public abstract class SubscriptionDatabase extends RoomDatabase {
     private static SubscriptionDatabase instance;
 
@@ -38,8 +39,8 @@ public abstract class SubscriptionDatabase extends RoomDatabase {
             executor.execute(() -> {
                 CategorieDao categorieDao = SubscriptionDatabase.instance.categorieDao();
                 categorieDao.insert(
-                        new Categorie("Streaming"),
-                        new Categorie("Mobilität")
+                        new Categorie("Streaming", Color.GREEN),
+                        new Categorie("Mobilität", Color.BLUE)
 
                 );
 

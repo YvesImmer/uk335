@@ -2,9 +2,11 @@ package ch.band.inf2019.uk335.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,12 +24,16 @@ import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.viewmodel.CategoryAdapter;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
+import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class EditCategoryActivity extends AppCompatActivity {
+    private static final String TAG = "EditCategoryActivity";
+
     TextInputEditText text_input_name;
     MainViewModel viewModel;
     Button btn_save;
     Button btn_delete;
+    Button btn_color_picker;
     Categorie categorie;
     ArrayList<Categorie> categories;
     private boolean isNew;
@@ -35,34 +41,55 @@ public class EditCategoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         setContentView(R.layout.activity_edit_category);
+        initViewModel();
+        initCategory();
+        initNameInput();
+        initSaveButton();
+        initDeleteButton();
+        initColorPicker();
+    }
+
+    private void initColorPicker() {
+        Log.d(TAG, "initColorPicker");
+        btn_color_picker = findViewById(R.id.btn_color_picker);
+        btn_color_picker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openColorPicker();
+            }
+        });
+    }
+
+    private void openColorPicker() {
+        Log.d(TAG, "openColorPicker: called");
+        int defaultColor = Color.BLUE;
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+
+            }
+
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                categorie.color = color;
+                btn_color_picker.setBackgroundColor(color);
+            }
+        });
+        colorPicker.show();
+    }
+
+    private void initViewModel() {
+        viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         viewModel.getCategories().observe(this, new Observer<List<Categorie>>() {
                     @Override
                     public void onChanged(List<Categorie> categories) {
                         categories = viewModel.getCategories().getValue();
                     }
                 });
-        text_input_name = findViewById(R.id.text_input_category_name);
-        text_input_name.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
+    }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        categorie.title = s.toString();
-                    }
-                }
-        );
-        btn_save = findViewById(R.id.btn_save_category);
-        btn_delete = findViewById(R.id.btn_delete_categorie);
-
+    private void initCategory() {
         Intent intent = getIntent();
         int categoryID = intent.getIntExtra(CategoryAdapter.EXTRA_CATEGORIE_ID ,-1);
         if(categoryID >= 0){
@@ -72,10 +99,23 @@ public class EditCategoryActivity extends AppCompatActivity {
         }else {
             setTitle("Kategorie erstellen");
             isNew = true;
-            categorie = new Categorie(getString(R.string.default_category_name));
+            categorie = new Categorie(getString(R.string.default_category_name), Color.GRAY);
         }
-        text_input_name.setText(categorie.title);
+    }
 
+    private void initDeleteButton() {
+        btn_delete = findViewById(R.id.btn_delete_categorie);
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog confirmBox = AskOption();
+                confirmBox.show();
+            }
+        });
+    }
+
+    private void initSaveButton() {
+        btn_save = findViewById(R.id.btn_save_category);
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,14 +128,27 @@ public class EditCategoryActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-        btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog confirmBox = AskOption();
-                confirmBox.show();
-            }
-        });
+    private void initNameInput() {
+        text_input_name = findViewById(R.id.text_input_category_name);
+        text_input_name.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        categorie.title = s.toString();
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                }
+        );
+        text_input_name.setText(categorie.title);
     }
 
     private void gotoCategories(){
