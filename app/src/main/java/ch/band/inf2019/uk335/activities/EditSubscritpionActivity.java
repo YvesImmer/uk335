@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -35,7 +37,8 @@ import ch.band.inf2019.uk335.db.Subscription;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
 import ch.band.inf2019.uk335.viewmodel.SubscriptionAdapter;
 
-public class EditSubscritpionActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class EditSubscritpionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
+    private static final String TAG = "EditSubscritpionActivit";
 
     private Subscription subscription;
     private ArrayList<Categorie> categories;
@@ -74,69 +77,22 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
             Calendar c = Calendar.getInstance();
             subscription.dayofnextPayment=c.getTime().getTime();
             subscription.title = "Neues Abo";
-            subscription.frequency = 2;
+            subscription.frequency = 1;
             subscription.price = 0;
         }
         setupInputs();
     }
 
     private void setupInputs() {
-        tv_selectedDate = findViewById(R.id.text_view_picked_date);
-        dueDate = DateFormat.getDateInstance().format(subscription.dayofnextPayment);
-        tv_selectedDate.setText(dueDate);
-        //Category Spinner
-        categorySpinner = findViewById(R.id.spinner_category_select);
-        ArrayAdapter<Categorie> categorySpinnerAdapter = new ArrayAdapter<Categorie>(this,
-                android.R.layout.simple_spinner_item, viewModel.getCategories().getValue());
-        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categorySpinner.setAdapter(categorySpinnerAdapter);
+        initDateSelection();
+        initCategorySpinner();
+        initSaveButton();
+        initDeleteButton();
+        initTitleInput();
+        initPriceInput();
+    }
 
-        Button btn_datepicker = findViewById(R.id.btn_datepicker);
-        btn_datepicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(getSupportFragmentManager(), "date picker");
-            }
-        });
-
-        btn_save = findViewById(R.id.btn_save_subscription);
-        btn_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewModel.update(subscription);
-                gotoSubscriptions();
-            }
-        });
-
-        btn_delete = findViewById(R.id.btn_delete_subscription);
-        btn_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog confirmBox = AskOption();
-                confirmBox.show();
-            }
-        });
-
-
-        nameTextInput = findViewById(R.id.text_input_name);
-        nameTextInput.setText(subscription.title);
-        nameTextInput.addTextChangedListener(
-                new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        subscription.title = s.toString();
-                    }
-                }
-        );
+    private void initPriceInput() {
         priceTextInput = findViewById(R.id.text_input_price);
         priceTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
         priceTextInput.setText(String.valueOf(subscription.price/100));
@@ -156,6 +112,72 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
                     }
                 }
         );
+    }
+
+    private void initTitleInput() {
+        nameTextInput = findViewById(R.id.text_input_name);
+        nameTextInput.setText(subscription.title);
+        nameTextInput.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        subscription.title = s.toString();
+                    }
+                }
+        );
+    }
+
+    private void initDeleteButton() {
+        btn_delete = findViewById(R.id.btn_delete_subscription);
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog confirmBox = AskOption();
+                confirmBox.show();
+            }
+        });
+    }
+
+    private void initSaveButton() {
+        btn_save = findViewById(R.id.btn_save_subscription);
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.update(subscription);
+                gotoSubscriptions();
+            }
+        });
+    }
+
+    private void initCategorySpinner() {
+        categorySpinner = findViewById(R.id.spinner_category_select);
+        ArrayAdapter<Categorie> categorySpinnerAdapter = new ArrayAdapter<Categorie>(this,
+                android.R.layout.simple_spinner_item, viewModel.getCategories().getValue());
+        categorySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(categorySpinnerAdapter);
+        categorySpinner.setOnItemSelectedListener(this);
+    }
+
+    private void initDateSelection() {
+        tv_selectedDate = findViewById(R.id.text_view_picked_date);
+        dueDate = DateFormat.getDateInstance().format(subscription.dayofnextPayment);
+        tv_selectedDate.setText(dueDate);
+        Button btn_datepicker = findViewById(R.id.btn_datepicker);
+        btn_datepicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
     }
 
     private void gotoSubscriptions() {
@@ -202,5 +224,17 @@ public class EditSubscritpionActivity extends AppCompatActivity implements DateP
                 .create();
 
         return myQuittingDialogBox;
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Categorie selected = (Categorie)categorySpinner.getSelectedItem();
+        Log.d(TAG, "onItemSelected called selected category: " + selected.title);
+        subscription.categorieid = selected.id;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
