@@ -55,7 +55,7 @@ public class Subscription {
                 switch (frequency){
                     case 1:c.add(Calendar.MONTH, 1);break;
                     case 2:c.add(Calendar.YEAR,1);break;
-                    default:break;
+                    default:return this;
                 }
 
                 dayofnextPayment = c.getTimeInMillis();

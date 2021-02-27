@@ -7,9 +7,12 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.TimeZone;
 
 import ch.band.inf2019.uk335.db.Categorie;
 import ch.band.inf2019.uk335.db.Subscription;
@@ -125,7 +128,7 @@ public class MainViewModel extends AndroidViewModel {
     }
     //endregion
     //endregion
-    //region Subscription Calculations
+    //region Calculations
     public void updateAllDayOfNextPayment(){
         if(livesubscriptions.getValue() != null) {
             for (Subscription s : livesubscriptions.getValue()
@@ -133,6 +136,49 @@ public class MainViewModel extends AndroidViewModel {
                 update(s.updateDayOfNextPayment(new Date().getTime()));
             }
         }
+    }
+    public int getCostYear(){
+        int cost = 0;
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        List<Subscription> subscriptionscopy = new ArrayList<Subscription>(subscriptions);
+        calendar.add(Calendar.YEAR,1);
+        long yearInFutur = calendar.getTimeInMillis();
+        for (Subscription s:subscriptionscopy
+             ) {
+            if(s.dayofnextPayment<yearInFutur)
+            if(s.frequency == 2){
+                cost+=s.price;
+            }else if (s.frequency == 1){
+                do {
+                    cost += s.price;
+                    s.updateDayOfNextPayment(yearInFutur);
+                }while (yearInFutur>s.dayofnextPayment);
+            }else{
+                cost+= s.price;
+
+            }
+        }
+        return cost;
+    }
+    public int getCostMonth(){
+        int cost = 0;
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        List<Subscription> subscriptionscopy = new ArrayList<Subscription>(subscriptions);
+        calendar.add(Calendar.YEAR,1);
+        long monthInFutur = calendar.getTimeInMillis();
+        for (Subscription s:subscriptionscopy
+        ) {
+            if(s.dayofnextPayment<monthInFutur)
+                if(s.frequency == 2){
+                    cost+=s.price;
+                }else if (s.frequency == 1){
+                        cost += s.price;
+                }else{
+                    cost+= s.price;
+
+                }
+        }
+        return cost;
     }
     //endregion
     //regions Observers
