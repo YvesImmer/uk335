@@ -109,14 +109,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         for (Subscription s:subscriptionscopy
         ) {
             if(s.dayofnextPayment<monthInFuture){
-                Log.d("Cost Calc",s.dayofnextPayment+" - "+monthInFuture+" = "+ (s.dayofnextPayment-monthInFuture) + s.title);
                 cost+= s.price;
             }
-
-
-
         }
-        Log.d("Cost Calc","Cost= "+cost);
         return cost;
     }
 }

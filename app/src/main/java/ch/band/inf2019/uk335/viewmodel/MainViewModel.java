@@ -147,18 +147,24 @@ public class MainViewModel extends AndroidViewModel{
     public int getCostYear(){
         int cost = 0;
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        List<Subscription> subscriptionscopy = new ArrayList<Subscription>(subscriptions);
         calendar.add(Calendar.YEAR,1);
         long yearInFutur = calendar.getTimeInMillis();
-        for (Subscription s:subscriptionscopy
+        for (Subscription s:subscriptions
              ) {
             if(s.dayofnextPayment<yearInFutur)
             if(s.frequency == 2){
                 cost+=s.price;
             }else if (s.frequency == 1){
+                Subscription scopy = new Subscription(
+                        s.title,
+                        s.dayofnextPayment,
+                        s.price,
+                        s.categorieid,
+                        s.frequency
+                );
                 do {
                     cost += s.price;
-                    s.updateDayOfNextPayment(yearInFutur);
+                    scopy.updateDayOfNextPayment(yearInFutur);
                 }while (yearInFutur>s.dayofnextPayment);
             }else{
                 cost+= s.price;
@@ -170,19 +176,12 @@ public class MainViewModel extends AndroidViewModel{
     public int getCostMonth(){
         int cost = 0;
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        List<Subscription> subscriptionscopy = new ArrayList<Subscription>(subscriptions);
-        calendar.add(Calendar.YEAR,1);
+        calendar.add(Calendar.MONTH,1);
         long monthInFutur = calendar.getTimeInMillis();
-        for (Subscription s:subscriptionscopy
+        for (Subscription s:subscriptions
         ) {
-            if(s.dayofnextPayment<monthInFutur)
-                if(s.frequency == 2){
+            if(s.dayofnextPayment<monthInFutur){
                     cost+=s.price;
-                }else if (s.frequency == 1){
-                        cost += s.price;
-                }else{
-                    cost+= s.price;
-
                 }
         }
         return cost;
