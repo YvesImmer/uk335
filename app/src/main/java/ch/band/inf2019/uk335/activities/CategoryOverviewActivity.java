@@ -1,6 +1,7 @@
 package ch.band.inf2019.uk335.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Categorie;
+import ch.band.inf2019.uk335.db.Subscription;
 import ch.band.inf2019.uk335.model.SubscriptionRepository;
 import ch.band.inf2019.uk335.viewmodel.CategoryAdapter;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
@@ -41,17 +43,19 @@ public class CategoryOverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category_overview);
         setTitle("Kategorien");
         Log.d(TAG, "onCreate: started");
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        Observer observer = new Observer<List<Categorie>>() {
 
-            @Override
-            public void onChanged(List<Categorie> categories) {
-                categoryAdapter.setCategories((ArrayList<Categorie>) categories);
-                categoryAdapter.notifyDataSetChanged();
-            }
-        };
-        mainViewModel.getCategories().observe(this, observer);
+        mainViewModel.getCategories().observe(this,
+                categories -> {
+            categoryAdapter.setCategories((ArrayList<Categorie>) categories);
+            categoryAdapter.notifyDataSetChanged();
+        });
+        mainViewModel.getSubscriptions().observe(this, subscriptions -> {
+            categoryAdapter.setSubscriptions((ArrayList<Subscription>) subscriptions);
+            categoryAdapter.notifyDataSetChanged();
+        }
+        );
         initRecyclerVView();
         initButtons();
     }
@@ -67,19 +71,10 @@ public class CategoryOverviewActivity extends AppCompatActivity {
 
     private void initButtons(){
         btn_goto_subscriptions = findViewById(R.id.btn_goto_subscriptions);
-        btn_goto_subscriptions.setOnClickListener((new View.OnClickListener(){
-            @Override
-            public  void onClick(View v){ gotoSubscriptions();};
-        }));
+        btn_goto_subscriptions.setOnClickListener((v -> gotoSubscriptions()));
 
         btn_new_category = findViewById(R.id.btn_new_category);
-        btn_new_category.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                gotoNewCategory();
-            }
-        });
+        btn_new_category.setOnClickListener(v -> gotoNewCategory());
     }
     private void gotoSubscriptions(){
         Intent intent = new Intent(this, MainActivity.class);

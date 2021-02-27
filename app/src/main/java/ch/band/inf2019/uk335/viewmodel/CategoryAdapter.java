@@ -12,21 +12,31 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.activities.EditCategoryActivity;
 import ch.band.inf2019.uk335.db.Categorie;
+import ch.band.inf2019.uk335.db.Subscription;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder>{
 
     private static final String TAG = "SubscriptionAdapter";
     public static final String EXTRA_CATEGORIE_ID = "ch.band.inf2019.uk335.EXTRA_CATEGORIE_ID";
-
+    private ArrayList<Subscription> subscriptions;
     private ArrayList<Categorie> categories = new ArrayList<Categorie>();
 
 
     public void setCategories(ArrayList<Categorie> categories){
         this.categories = categories;
+        notifyDataSetChanged();
+    }
+    public void setSubscriptions(ArrayList<Subscription> subscriptions){
+        this.subscriptions = subscriptions;
+        notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -48,7 +58,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             }
         });
         //TODO implement a method to get the monthly cost of a category
-        //holder.text_view_price.setText(current_item.monthlyPrice);
+        holder.text_view_price.setText(String.valueOf(mothlyCost(current_item.id)/100.0));
         holder.text_view_name.setText(current_item.title);
         holder.parent_layout.setBackgroundColor(current_item.color);
 
@@ -76,6 +86,38 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         Intent intent = new Intent(v.getContext(), EditCategoryActivity.class);
         intent.putExtra(EXTRA_CATEGORIE_ID, categoryid);
         v.getContext().startActivity(intent);
+    }
+    private int mothlyCost(int cathegorieid){
+        int cost = 0;
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        List<Subscription> subscriptionscopy = new ArrayList<Subscription>();
+        for (Subscription s:subscriptions
+             ) {
+            if(s.categorieid == cathegorieid){
+                subscriptionscopy.add(new Subscription(
+                        s.title,
+                        s.dayofnextPayment,
+                        s.price,
+                        s.categorieid,
+                        s.frequency
+                ));
+            }
+
+        }
+        calendar.add(Calendar.MONTH,1);
+        long monthInFuture = calendar.getTimeInMillis();
+        for (Subscription s:subscriptionscopy
+        ) {
+            if(s.dayofnextPayment<monthInFuture){
+                Log.d("Cost Calc",s.dayofnextPayment+" - "+monthInFuture+" = "+ (s.dayofnextPayment-monthInFuture) + s.title);
+                cost+= s.price;
+            }
+
+
+
+        }
+        Log.d("Cost Calc","Cost= "+cost);
+        return cost;
     }
 }
 
