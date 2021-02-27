@@ -92,6 +92,21 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         initDeleteButton();
         initTitleInput();
         initPriceInput();
+        initFrequencySpinner();
+    }
+
+    private void initFrequencySpinner() {
+
+        frequencySpinner = findViewById(R.id.spinner_frequency_select);
+        ArrayAdapter<Frequency> frequencySpinnerAdapter = new ArrayAdapter<Frequency>(this,
+                android.R.layout.simple_spinner_item, new Frequency[]{
+                        new Frequency(0, "Niemals"),
+                        new Frequency(1, "Monatlich"),
+                        new Frequency(2, "Jährlich")
+        });
+        frequencySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        frequencySpinner.setAdapter(frequencySpinnerAdapter);
+        frequencySpinner.setOnItemSelectedListener(this);
     }
 
     private void initPriceInput() {
@@ -245,12 +260,29 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Categorie selected = (Categorie) categorySpinner.getSelectedItem();
+        Frequency frequency = (Frequency) frequencySpinner.getSelectedItem();
         Log.d(TAG, "onItemSelected called selected category: " + selected.title);
+        subscription.frequency = frequency.id;
         subscription.categorieid = selected.id;
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+}
+
+class Frequency{
+    int id;
+    String name;
+    Frequency(int id, String name){
+        this.id = id;
+        this.name = name;
+    };
+
+    @Override
+    public String toString(){
+        return name;
     }
 }

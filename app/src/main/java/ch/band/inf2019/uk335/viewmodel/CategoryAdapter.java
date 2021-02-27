@@ -78,3 +78,4 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         v.getContext().startActivity(intent);
     }
 }
+

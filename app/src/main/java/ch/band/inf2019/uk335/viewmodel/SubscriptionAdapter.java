@@ -1,5 +1,6 @@
 package ch.band.inf2019.uk335.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +24,6 @@ import ch.band.inf2019.uk335.db.Subscription;
 public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapter.ViewHolder>{
     public static final String EXTRA_SUBSCRIPTION_ID = "ch.band.inf2019.uk335.EXTRA_SUBSCRIPTION_ID";
     private static final String TAG = "SubscriptionAdapter";
-    private Categorie categorie;
     private ArrayList<Subscription> subscriptions = new ArrayList<Subscription>();
     private View.OnClickListener editOnclickListener;
     private ArrayList<Categorie> categories;
@@ -37,18 +37,16 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         return viewHolder;
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
 
         Subscription current_item = subscriptions.get(position);
-        categorie = getCategory(current_item.categorieid);
+        Categorie categorie = getCategory(current_item.categorieid);
         //TODO implement method to get category name for a Subscription
-        String frequency = "Einmalig";
         if (current_item.frequency == 1){
-            frequency = "Monatlich";
         }else if (current_item.frequency ==2){
-            frequency = "Jährlich";
         }
         String title = categorie.title;
         holder.text_view_category.setText(title);
