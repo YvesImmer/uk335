@@ -21,6 +21,10 @@ public interface CategorieDao {
     @Delete
     void deleteCategories(Categorie... categories);
 
+    /**
+     * List of all Categories
+     * @return All Categories ordered by there ID
+     */
     @Query("SELECT * FROM categorie_table ORDER BY id ASC")
     LiveData<List<Categorie>> getAllCategories();
 

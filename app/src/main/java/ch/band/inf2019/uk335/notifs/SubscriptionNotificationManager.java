@@ -43,6 +43,7 @@ public class SubscriptionNotificationManager implements Observer<List<Subscripti
     @Override
     public void onChanged(List<Subscription> subscriptions) {
         for (int i = 0; i < subscriptions.size(); i++) {
+
             Notification notification = createNotification(subscriptions.get(i).title);
             Intent notificationIntent = new Intent(context, NotificationPublisher.class);
             notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, i);

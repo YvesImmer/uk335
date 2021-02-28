@@ -111,22 +111,6 @@ public class MainViewModel extends AndroidViewModel{
 
     }
 
-    /**
-     * Returns the newest Category
-     * @return Category with the highest ID
-     */
-    public Categorie getLastCategory(){
-        int maxid = 0;
-        Categorie lastCategorie = null;
-        for (Categorie categorie: categories
-        ) {
-            if(categorie.id> maxid){
-                maxid = categorie.id;
-                lastCategorie = categorie;
-            }
-        }
-        return  lastCategorie;
-    }
 
 
     /**
@@ -166,17 +150,23 @@ public class MainViewModel extends AndroidViewModel{
     //endregion
     //endregion
     //region Calculations
+
+    /**
+     * Updates all the next Payment Days in the past to ones in the Future from Subscriptions
+     */
     public void updateAllDayOfNextPayment(){
         if(livesubscriptions.getValue() != null) {
             for (Subscription s : livesubscriptions.getValue()
             ) {
-                update(s.updateDayOfNextPayment(new Date().getTime()));
+                update(s.updateDayOfNextPayment());
             }
         }
     }
 
-
-    public int calculateCostMonthYear(){
+    /**
+     * Calculates the Cost for the next Month or the next Year depending on the Mode
+     */
+    public void calculateCostMonthYear(){
         cost = 0;
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         if(!isYearlyMode) {
@@ -206,17 +196,28 @@ public class MainViewModel extends AndroidViewModel{
                     }
             }
         }
-        return cost;
     }
 
+    /**
+     * Changes the mode for Yearly/Monthly Calculation
+     */
     public  void changeMode(){
         isYearlyMode = !isYearlyMode;
         calculateCostMonthYear();
     }
+
+    /**
+     * Returns if we are in the yearly  Mode
+     * @return true = yearlyMode false=Monthly Mode
+     */
     public boolean isYearlyMode() {
         return isYearlyMode;
     }
 
+    /**
+     * Returns the Calculated
+     * @return Calculated Cost
+     */
     public int getCostMonthYear() {
         return cost;
     }

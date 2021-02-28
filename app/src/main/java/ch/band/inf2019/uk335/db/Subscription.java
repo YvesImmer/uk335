@@ -5,6 +5,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import static androidx.room.ForeignKey.CASCADE;
@@ -47,11 +48,17 @@ public class Subscription {
         this("",0,0,categorieId,0);
 
     }
-    public Subscription updateDayOfNextPayment(long currentDate){
+
+    /**
+     * Updates the Day of next Payment so its in the future if the subsciption is in the Futur
+     * @return a Subscription with a updated Day of next Payment
+     */
+    public Subscription updateDayOfNextPayment(){
         if(frequency<0){
+            long today = new Date().getTime();
             Calendar c = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
             c.setTimeInMillis(dayofnextPayment);
-            while (dayofnextPayment < currentDate){
+            while (dayofnextPayment < today){
                 switch (frequency){
                     case 1:c.add(Calendar.MONTH, 1);break;
                     case 2:c.add(Calendar.YEAR,1);break;

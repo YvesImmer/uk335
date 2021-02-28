@@ -52,7 +52,6 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
 
         Subscription current_item = subscriptions.get(position);
         Categorie categorie = getCategory(current_item.categorieid);
-        //TODO implement method to get category name for a Subscription
         String frequency = "Einmalig";
         if (current_item.frequency == 1){
             frequency = "Monatlich";

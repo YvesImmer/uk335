@@ -57,7 +57,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 openEditActivity(v,current_item.id);
             }
         });
-        //TODO implement a method to get the monthly cost of a category
         holder.text_view_price.setText(String.valueOf(mothlyCost(current_item.id)/100.0));
         holder.text_view_name.setText(current_item.title);
         holder.parent_layout.setBackgroundColor(current_item.color);
@@ -90,25 +89,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private int mothlyCost(int cathegorieid){
         int cost = 0;
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        List<Subscription> subscriptionscopy = new ArrayList<Subscription>();
-        for (Subscription s:subscriptions
-             ) {
-            if(s.categorieid == cathegorieid){
-                subscriptionscopy.add(new Subscription(
-                        s.title,
-                        s.dayofnextPayment,
-                        s.price,
-                        s.categorieid,
-                        s.frequency
-                ));
-            }
-
-        }
         calendar.add(Calendar.MONTH,1);
         long monthInFuture = calendar.getTimeInMillis();
-        for (Subscription s:subscriptionscopy
+        for (Subscription s:subscriptions
         ) {
-            if(s.dayofnextPayment<monthInFuture){
+            if(s.categorieid == cathegorieid && s.dayofnextPayment<monthInFuture){
                 cost+= s.price;
             }
         }
