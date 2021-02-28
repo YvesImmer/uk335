@@ -344,19 +344,19 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+    class Frequency{
+        int id;
+        String name;
+        Frequency(int id, String name){
+            this.id = id;
+            this.name = name;
+        };
 
-}
-
-class Frequency{
-    int id;
-    String name;
-    Frequency(int id, String name){
-        this.id = id;
-        this.name = name;
-    };
-
-    @Override
-    public String toString(){
-        return name;
+        @Override
+        public String toString(){
+            return name;
+        }
     }
+
 }
+
