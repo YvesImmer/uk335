@@ -50,6 +50,11 @@ public class EditCategoryActivity extends AppCompatActivity {
         initColorPicker();
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
     private void initColorPicker() {
         Log.d(TAG, "initColorPicker");
         btn_color_picker = findViewById(R.id.btn_color_picker);

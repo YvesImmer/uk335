@@ -11,9 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import ch.band.inf2019.uk335.R;
@@ -29,16 +31,31 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     private ArrayList<Categorie> categories = new ArrayList<Categorie>();
 
 
+    /**
+     * Is called by the observer to keep us informed when the dataset changes so we always have the newest data.
+     * @param categories
+     */
     public void setCategories(ArrayList<Categorie> categories){
         this.categories = categories;
         notifyDataSetChanged();
     }
+
+    /**
+     * Is called by the observer to keep us informed when the dataset changes so we always have the newest data.
+     * @param subscriptions
+     */
     public void setSubscriptions(ArrayList<Subscription> subscriptions){
         this.subscriptions = subscriptions;
         notifyDataSetChanged();
 
     }
 
+    /**
+     * Creates a holder for our view which stores all the metadata related to the view.
+     * @param parent
+     * @param viewType
+     * @return viewHolder
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,9 +64,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         return viewHolder;
     }
 
+    /**
+     * Prepares the view for dispaying by assigning all needed values.
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: called");
+
         Categorie current_item = categories.get(position);
         holder.parent_layout.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -57,18 +80,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 openEditActivity(v,current_item.id);
             }
         });
-        //TODO implement a method to get the monthly cost of a category
-        holder.text_view_price.setText(String.valueOf(mothlyCost(current_item.id)/100.0));
+        holder.text_view_price.setText(NumberFormat.getCurrencyInstance(new Locale("DE","CH")).format(mothlyCost(current_item.id)/100.0));
         holder.text_view_name.setText(current_item.title);
         holder.parent_layout.setBackgroundColor(current_item.color);
 
     }
 
+    /**
+     *Is called so the RecyclerView knows how many items it has to display.
+     * @return
+     */
     @Override
     public int getItemCount() {
         return categories.size();
     }
 
+    /**
+     * Class to store the metadata of a particular item inside the RecyclerView.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout parent_layout;
         TextView text_view_name;
@@ -82,11 +111,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
     }
 
+    /**
+     * Is called by onClick to open the edit view to edit the category item.
+     * @param v
+     * @param categoryid
+     */
     private void openEditActivity(View v, int categoryid) {
         Intent intent = new Intent(v.getContext(), EditCategoryActivity.class);
         intent.putExtra(EXTRA_CATEGORIE_ID, categoryid);
         v.getContext().startActivity(intent);
     }
+
+    /**
+     * Calculates the cost of all subscriptions in the category
+     * @param cathegorieid
+     * @return int cost
+     */
     private int mothlyCost(int cathegorieid){
         int cost = 0;
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));

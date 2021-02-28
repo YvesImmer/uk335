@@ -30,6 +30,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import ch.band.inf2019.uk335.R;
 import ch.band.inf2019.uk335.db.Categorie;
@@ -37,6 +38,9 @@ import ch.band.inf2019.uk335.db.Subscription;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
 import ch.band.inf2019.uk335.viewmodel.SubscriptionAdapter;
 
+/**
+ * Activity to create and edit Subscriptions
+ */
 public class EditSubscritpionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener {
     private static final String TAG = "EditSubscritpionActivit";
 
@@ -53,10 +57,14 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
     String dueDate;
     private boolean isNew;
 
-
+    /**
+     * onCreate, sets up everything
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //prep viewModel
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         setContentView(R.layout.activity_edit_subscription);
         viewModel.getCategories().observe(this, new Observer<List<Categorie>>() {
@@ -65,6 +73,7 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
                 categories = viewModel.getCategories().getValue();
             }
         });
+        //get passed subscription or create a new one
         Intent intent = getIntent();
         int subscriptionID = intent.getIntExtra(SubscriptionAdapter.EXTRA_SUBSCRIPTION_ID, -1);
         if (subscriptionID >= 0) {
@@ -85,6 +94,9 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         setupInputs();
     }
 
+    /**
+     * initializes the controls
+     */
     private void setupInputs() {
         initDateSelection();
         initCategorySpinner();
@@ -95,9 +107,12 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         initFrequencySpinner();
     }
 
+    /**
+     * initializes the Dropdown Spinner for Frquency selection
+     */
     private void initFrequencySpinner() {
-
         frequencySpinner = findViewById(R.id.spinner_frequency_select);
+        //Needs to be manualy updated if there ever is an other frequency of notifications
         ArrayAdapter<Frequency> frequencySpinnerAdapter = new ArrayAdapter<Frequency>(this,
                 android.R.layout.simple_spinner_item, new Frequency[]{
                         new Frequency(0, "Niemals"),
@@ -110,6 +125,9 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         frequencySpinner.setSelection(subscription.frequency);
     }
 
+    /**
+     * initializes the textinput for price entry
+     */
     private void initPriceInput() {
         priceTextInput = findViewById(R.id.text_input_price);
         priceTextInput.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -125,9 +143,10 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         if(!s.toString().equals(current)){
                             priceTextInput.removeTextChangedListener(this);
-                            String cleanString = s.toString().replaceAll("[$,.]","");
+                            //removes any existing symbols
+                            String cleanString = s.toString().trim().replaceAll("[$,.CHF ]","");
                             double parsed = Double.parseDouble(cleanString);
-                            String formatted = NumberFormat.getCurrencyInstance().format(((parsed/100)));
+                            String formatted = NumberFormat.getCurrencyInstance(new Locale("DE","CH")).format(((parsed/100)));
                             current = formatted;
                             priceTextInput.setText(current);
                             priceTextInput.setSelection(formatted.length());

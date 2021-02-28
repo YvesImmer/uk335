@@ -21,6 +21,6 @@
     <string name="default_category_name">Neue Kategorie</string>
     <string name="default_subscription_name">Neues Abo</string>
     <string name="text_view_color">Farbe:</string>
-    <string name="yearly">Jährlich</string>
-    <string name="monthly">Monatlich</string>
+    <string name="yearly">Dieses Jahr</string>
+    <string name="monthly">Dieser Monat</string>
 </resources>

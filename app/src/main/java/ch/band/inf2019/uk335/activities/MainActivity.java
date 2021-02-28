@@ -20,6 +20,9 @@ import ch.band.inf2019.uk335.db.Subscription;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
 import ch.band.inf2019.uk335.viewmodel.SubscriptionAdapter;
 
+/**
+ * Launch Activity, Displays all existing Subscriptions
+ */
 public class MainActivity extends OverviewActivity {
     private static final String TAG = "MainActivity";
 
@@ -29,6 +32,10 @@ public class MainActivity extends OverviewActivity {
     private SubscriptionAdapter adapter;
     private Button btn_goto_categories;
 
+    /**
+     * Initializes the view, does most of the hard work
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,16 +67,22 @@ public class MainActivity extends OverviewActivity {
         initSum();
     }
 
-        private void initRecyclerView(){
-        Log.d(TAG, "initRecylerView: called");
-        recyclerView = findViewById(R.id.recycler_view_subscriptions);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
-        adapter = new SubscriptionAdapter();
-        recyclerView.setAdapter(adapter);
+    /**
+     * Initializes the RecyclerView
+     */
+    private void initRecyclerView(){
+    Log.d(TAG, "initRecylerView: called");
+    recyclerView = findViewById(R.id.recycler_view_subscriptions);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setHasFixedSize(true);
+    adapter = new SubscriptionAdapter();
+    recyclerView.setAdapter(adapter);
 
     }
 
+    /**
+     * Initializes the navigation Buttons
+     */
     private void initButtons(){
         btn_goto_categories = findViewById(R.id.btn_goto_categories);
         btn_goto_categories.setOnClickListener(new View.OnClickListener() {
@@ -89,11 +102,17 @@ public class MainActivity extends OverviewActivity {
 
     }
 
+    /**
+     * Opens the CategoryOverview
+     */
     private void gotoCategories(){
         Intent intent = new Intent(this, CategoryOverviewActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Opens a new EditSubscriptionActivity with a new Subscription
+     */
     private void gotoNewSubscritpion(){
         Intent intent = new Intent(this, EditSubscritpionActivity.class);
         startActivity(intent);
