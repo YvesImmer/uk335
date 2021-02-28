@@ -64,8 +64,8 @@ public class EditCategoryActivity extends AppCompatActivity {
 
     private void openColorPicker() {
         Log.d(TAG, "openColorPicker: called");
-        int defaultColor = Color.BLUE;
-        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+
+        AmbilWarnaDialog colorPicker = new AmbilWarnaDialog(this, categorie.color, new AmbilWarnaDialog.OnAmbilWarnaListener() {
             @Override
             public void onCancel(AmbilWarnaDialog dialog) {
 
