@@ -29,7 +29,7 @@ public class MainViewModel extends AndroidViewModel{
     private SubscriptionNotificationManager notificationManager;
     SubscriptionRepository repository;
     private boolean isYearlyMode = false;
-
+    private int cost ;
     public MainViewModel(@NonNull Application application) {
         super(application);
         repository = SubscriptionRepository.getInstance(application);
@@ -108,7 +108,7 @@ public class MainViewModel extends AndroidViewModel{
     public Subscription getSubscriptionById(int ID) {
 
         for (Subscription s:
-                Objects.requireNonNull(subscriptions)
+                subscriptions
         ) {
             if (s.subsciriptionid == ID) return s;
 
@@ -146,43 +146,49 @@ public class MainViewModel extends AndroidViewModel{
 
     public int getCostYear(){
         int cost = 0;
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendar.add(Calendar.YEAR,1);
-        long yearInFutur = calendar.getTimeInMillis();
-        for (Subscription s:subscriptions
-             ) {
-            if(s.dayofnextPayment<yearInFutur)
-            if(s.frequency == 2){
-                cost+=s.price;
-            }else if (s.frequency == 1){
-                Subscription scopy = new Subscription(
-                        s.title,
-                        s.dayofnextPayment,
-                        s.price,
-                        s.categorieid,
-                        s.frequency
-                );
-                do {
-                    cost += s.price;
-                    scopy.updateDayOfNextPayment(yearInFutur);
-                }while (yearInFutur>s.dayofnextPayment);
-            }else{
-                cost+= s.price;
+        if(subscriptions!=null) {
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            calendar.add(Calendar.YEAR, 1);
+            long yearInFutur = calendar.getTimeInMillis();
+            for (Subscription s : Objects.requireNonNull(subscriptions)
 
+            ) {
+                if (s.dayofnextPayment < yearInFutur)
+                    if (s.frequency == 2) {
+                        cost += s.price;
+                    } else if (s.frequency == 1) {
+                        Subscription scopy = new Subscription(
+                                s.title,
+                                s.dayofnextPayment,
+                                s.price,
+                                s.categorieid,
+                                s.frequency
+                        );
+                        do {
+                            cost += s.price;
+                            scopy.updateDayOfNextPayment(yearInFutur);
+                        } while (yearInFutur > s.dayofnextPayment);
+                    } else {
+                        cost += s.price;
+
+                    }
             }
         }
         return cost;
     }
     public int getCostMonth(){
         int cost = 0;
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        calendar.add(Calendar.MONTH,1);
-        long monthInFutur = calendar.getTimeInMillis();
-        for (Subscription s:subscriptions
-        ) {
-            if(s.dayofnextPayment<monthInFutur){
-                    cost+=s.price;
+        if(subscriptions!=null) {
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            calendar.add(Calendar.MONTH, 1);
+            long monthInFutur = calendar.getTimeInMillis();
+            for (Subscription s : subscriptions
+
+            ) {
+                if (s.dayofnextPayment < monthInFutur) {
+                    cost += s.price;
                 }
+            }
         }
         return cost;
     }
@@ -194,6 +200,10 @@ public class MainViewModel extends AndroidViewModel{
         return isYearlyMode;
     }
 
+    public int getCostMonthYear() {
+        return cost;
+    }
+
 
     //endregion
     //regions Observers
@@ -203,6 +213,46 @@ public class MainViewModel extends AndroidViewModel{
         @Override
         public void onChanged(List<Subscription> data) {
             subscriptions = data;
+            cost = 0;
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+            if(!isYearlyMode) {
+                calendar.add(Calendar.MONTH, 1);
+                long monthInFutur = calendar.getTimeInMillis();
+                for (Subscription s : subscriptions
+
+                ) {
+                    if (s.dayofnextPayment < monthInFutur) {
+                        cost += s.price;
+                    }
+                }
+            }else {
+                calendar.add(Calendar.YEAR, 1);
+                long yearInFutur = calendar.getTimeInMillis();
+                for (Subscription s : Objects.requireNonNull(subscriptions)
+
+                ) {
+                    if (s.dayofnextPayment < yearInFutur)
+                        if (s.frequency == 2) {
+                            cost += s.price;
+                        } else if (s.frequency == 1) {
+                            Subscription scopy = new Subscription(
+                                    s.title,
+                                    s.dayofnextPayment,
+                                    s.price,
+                                    s.categorieid,
+                                    s.frequency
+                            );
+                            do {
+                                cost += scopy.price;
+                                scopy.updateDayOfNextPayment(yearInFutur);
+                            } while (yearInFutur > scopy.dayofnextPayment);
+                        } else {
+                            cost += s.price;
+
+                        }
+                }
+            }
+
         }
     }
     private class CategoriesObserver implements Observer<List<Categorie>>{
@@ -213,6 +263,7 @@ public class MainViewModel extends AndroidViewModel{
             categories = data;
         }
     }
+
 
     //endregion
 }

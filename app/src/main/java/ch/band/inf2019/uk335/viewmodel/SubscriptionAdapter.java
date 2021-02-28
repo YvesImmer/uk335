@@ -33,9 +33,9 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
     public static final String EXTRA_SUBSCRIPTION_ID = "ch.band.inf2019.uk335.EXTRA_SUBSCRIPTION_ID";
     private static final String TAG = "SubscriptionAdapter";
     private Categorie categorie;
-    private ArrayList<Subscription> subscriptions = new ArrayList<Subscription>();
+    private List<Subscription> subscriptions = new ArrayList<>();
     private View.OnClickListener editOnclickListener;
-    private ArrayList<Categorie> categories;
+    private List<Categorie> categories;
 
     @NonNull
     @Override
