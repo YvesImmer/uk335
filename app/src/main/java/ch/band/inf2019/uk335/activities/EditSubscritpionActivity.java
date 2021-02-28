@@ -116,7 +116,6 @@ public class EditSubscritpionActivity extends AppCompatActivity implements Adapt
         priceTextInput.addTextChangedListener(
                 new TextWatcher() {
                     private String current ="";
-//                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("DE","CH"));
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                     }

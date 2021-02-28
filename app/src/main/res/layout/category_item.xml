@@ -13,15 +13,16 @@
         android:layout_height="wrap_content"
         android:background="@color/cardview_dark_background"
         android:id="@id/relative_layout_card_category_parent"
+        android:clickable="true"
+        android:focusable="true">
         >
         <RelativeLayout
             android:id="@+id/relative_layout_category_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:focusable="true">
+            android:layout_alignParentRight="true">
+
             <TextView
                 android:id="@+id/text_view_category_price"
                 android:layout_width="wrap_content"

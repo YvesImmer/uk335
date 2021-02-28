@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,12 +20,11 @@ import ch.band.inf2019.uk335.db.Subscription;
 import ch.band.inf2019.uk335.viewmodel.MainViewModel;
 import ch.band.inf2019.uk335.viewmodel.SubscriptionAdapter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends OverviewActivity {
     private static final String TAG = "MainActivity";
 
     //vars
     private ArrayList<Subscription>  subscriptions;
-    private MainViewModel mainViewModel;
     private RecyclerView recyclerView;
     private SubscriptionAdapter adapter;
     private Button btn_goto_categories;
@@ -39,55 +35,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started");
 
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         setTitle("Abos");
 
-
-
-
-        mainViewModel.getSubscriptions().observe( this, subscriptions -> {
+        viewModel.getSubscriptions().observe( this, subscriptions -> {
+            // RELEASE
             adapter.setSubscriptions((ArrayList<Subscription>) subscriptions);
             adapter.notifyDataSetChanged();
         });
-        mainViewModel.getSubscriptions().observe(this, subscriptions -> {
-            setYearMonthCost();
+        viewModel.getSubscriptions().observe(this, subscriptions -> {
+            setYearMontCost();
                 }
         );
-        mainViewModel.getCategories().observe(this, categories -> {
-            adapter.setCategories((ArrayList<Categorie>) categories);
-            adapter.notifyDataSetChanged();
+        viewModel.getCategories().observe(this, new Observer<List<Categorie>>() {
+            @Override
+            public void onChanged(List<Categorie> categories) {
+                adapter.setCategories((ArrayList<Categorie>) categories);
+                adapter.notifyDataSetChanged();
+            }
         });
-        mainViewModel.updateAllDayOfNextPayment();
+        viewModel.updateAllDayOfNextPayment();
         initRecyclerView();
         initButtons();
         initSum();
     }
-
-    private void initSum() {
-        RelativeLayout container = findViewById(R.id.relative_layout_frequency_container);
-        container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Sum Field: clicked");
-                mainViewModel.changeMode();
-                setYearMontCost();
-            }
-        });
-        setYearMonthCost();
-
-    }
-    private void setYearMonthCost(){
-        TextView textViewFrequency = findViewById(R.id.text_view_frequency_label);
-        TextView textViewSum = findViewById(R.id.text_view_price_frequency);
-        if (mainViewModel.isYearlyMode()) {
-            textViewFrequency.setText(getString(R.string.yearly));
-        } else {
-            textViewFrequency.setText(getString(R.string.monthly));
-        }
-        textViewSum.setText(String.valueOf(mainViewModel.getCostMonthYear()/100.0));
-    }
-
-
 
         private void initRecyclerView(){
         Log.d(TAG, "initRecylerView: called");
