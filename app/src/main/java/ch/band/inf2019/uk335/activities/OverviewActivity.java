@@ -45,7 +45,7 @@ public abstract class OverviewActivity  extends AppCompatActivity {
         } else {
             textViewFrequency.setText(getString(R.string.monthly));
         }
-        double cost =viewModel.getCostMonthYear()/100;
+        double cost = (double)viewModel.getCostMonthYear()/100;
         textViewSum.setText(NumberFormat.getCurrencyInstance(new Locale("DE","CH")).format(cost));
     }
 }
